@@ -7,3 +7,6 @@
 [submodule "ext/libwispbase"]
 	path = ext/libwispbase
 	url = /afs/ece.cmu.edu/project/abstract/repos/wisp5
+[submodule "ext/maker"]
+	path = ext/maker
+	url = /afs/ece.cmu.edu/project/abstract/repos/maker
