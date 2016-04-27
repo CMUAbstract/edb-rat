@@ -1,0 +1,9 @@
+[submodule "ext/libmsp"]
+	path = ext/libmsp
+	url = /afs/ece.cmu.edu/project/abstract/repos/libmsp
+[submodule "ext/libedb"]
+	path = ext/libedb
+	url = /afs/ece.cmu.edu/project/abstract/repos/edb/libedb
+[submodule "ext/libwispbase"]
+	path = ext/libwispbase
+	url = /afs/ece.cmu.edu/project/abstract/repos/wisp5
