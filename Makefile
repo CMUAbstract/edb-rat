@@ -5,7 +5,7 @@ TOOLCHAINS = \
 	gcc \
 	clang \
 
-BOARD ?= wisp
+export BOARD ?= wisp
 
 include ext/maker/Makefile
 
