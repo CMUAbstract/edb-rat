@@ -1,5 +1,4 @@
 TOOLS = \
-	edb \
 
 TOOLCHAINS = \
 	gcc \
