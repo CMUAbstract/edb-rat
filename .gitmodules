@@ -10,3 +10,9 @@
 [submodule "ext/maker"]
 	path = ext/maker
 	url = /afs/ece.cmu.edu/project/abstract/repos/maker
+[submodule "ext/edb-firmware"]
+	path = ext/edb-firmware
+	url = /afs/ece.cmu.edu/project/abstract/repos/edb/edb-firmware
+[submodule "ext/edb-console"]
+	path = ext/edb-console
+	url = /afs/ece.cmu.edu/project/abstract/repos/edb/edb-console
