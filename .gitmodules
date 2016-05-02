@@ -1,18 +1,18 @@
 [submodule "ext/libmsp"]
 	path = ext/libmsp
-	url = /afs/ece.cmu.edu/project/abstract/repos/libmsp
+    url = https://github.com/CMUAbstract/libmsp
 [submodule "ext/libedb"]
 	path = ext/libedb
-	url = /afs/ece.cmu.edu/project/abstract/repos/edb/libedb
+    url = https://github.com/CMUAbstract/libedb
 [submodule "ext/libwispbase"]
 	path = ext/libwispbase
-	url = /afs/ece.cmu.edu/project/abstract/repos/wisp5
+    url = https://github.com/CMUAbstract/libwispbase
 [submodule "ext/maker"]
 	path = ext/maker
-	url = /afs/ece.cmu.edu/project/abstract/repos/maker
+    url = https://github.com/CMUAbstract/maker
 [submodule "ext/edb-firmware"]
 	path = ext/edb-firmware
-	url = /afs/ece.cmu.edu/project/abstract/repos/edb/edb-firmware
+    url = https://github.com/CMUAbstract/edb-firmware
 [submodule "ext/edb-console"]
 	path = ext/edb-console
-	url = /afs/ece.cmu.edu/project/abstract/repos/edb/edb-console
+    url = https://github.com/CMUAbstract/edb-console
