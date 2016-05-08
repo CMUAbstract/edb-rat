@@ -41,6 +41,9 @@ int main() {
 #ifdef TEST_BREAKPOINTS
         EXTERNAL_BREAKPOINT(0);
         for (unsigned i = 0; i < 500; ++i);
+
+        EXTERNAL_BREAKPOINT(1);
+        for (unsigned i = 0; i < 500; ++i);
 #endif // TEST_BREAKPOINTS
 
     }
