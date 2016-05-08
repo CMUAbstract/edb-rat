@@ -16,6 +16,7 @@
 
 #define TEST_INTERRUPT
 // #define TEST_WATCHPOINTS
+// #define TEST_BREAKPOINTS
 
 static void init_hw()
 {
@@ -40,6 +41,11 @@ int main() {
         WATCHPOINT(1);
         for (unsigned i = 0; i < 500; ++i);
 #endif // TEST_WATCHPOINTS
+
+#ifdef TEST_BREAKPOINTS
+        EXTERNAL_BREAKPOINT(0);
+        for (unsigned i = 0; i < 500; ++i);
+#endif // TEST_BREAKPOINTS
 
     }
 
