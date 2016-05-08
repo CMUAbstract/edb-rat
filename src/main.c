@@ -14,10 +14,6 @@
 
 #include "pins.h"
 
-#define TEST_INTERRUPT
-// #define TEST_WATCHPOINTS
-// #define TEST_BREAKPOINTS
-
 static void init_hw()
 {
     msp_watchdog_disable();
