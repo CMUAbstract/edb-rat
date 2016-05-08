@@ -14,6 +14,7 @@
 
 #include "pins.h"
 
+#define TEST_INTERRUPT
 // #define TEST_WATCHPOINTS
 
 static void init_hw()
