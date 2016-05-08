@@ -14,6 +14,8 @@
 
 #include "pins.h"
 
+// #define TEST_WATCHPOINTS
+
 static void init_hw()
 {
     msp_watchdog_disable();
@@ -29,6 +31,14 @@ int main() {
 #endif
 
     while(1) {
+
+#ifdef TEST_WATCHPOINTS
+        WATCHPOINT(0);
+        for (unsigned i = 0; i < 500; ++i);
+
+        WATCHPOINT(1);
+        for (unsigned i = 0; i < 500; ++i);
+#endif // TEST_WATCHPOINTS
 
     }
 
