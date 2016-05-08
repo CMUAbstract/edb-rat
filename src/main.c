@@ -49,6 +49,18 @@ int main() {
         for (unsigned i = 0; i < 500; ++i);
 #endif // TEST_BREAKPOINTS
 
+#ifdef TEST_ENERGY_GUARDS
+        WATCHPOINT(0);
+
+        ENERGY_GUARD_BEGIN();
+        for (unsigned i = 0; i < 5000; ++i);
+        ENERGY_GUARD_END();
+
+        WATCHPOINT(1);
+
+        for (unsigned i = 0; i < 500; ++i);
+#endif // TEST_ENERGY_GUARDS
+
     }
 
     return 0;

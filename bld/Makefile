@@ -14,6 +14,7 @@ SRC_ROOT = ../../src
 TEST_INTERRUPT = 1
 TEST_WATCHPOINTS = 0
 TEST_BREAKPOINTS = 0
+TEST_ENERGY_GUARDS = 0
 
 include ../Makefile.config
 
