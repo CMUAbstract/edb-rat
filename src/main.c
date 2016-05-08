@@ -32,10 +32,13 @@ int main() {
 
 #ifdef TEST_WATCHPOINTS
         WATCHPOINT(0);
-        for (unsigned i = 0; i < 500; ++i);
+        for (unsigned i = 0; i < 100; ++i);
 
         WATCHPOINT(1);
-        for (unsigned i = 0; i < 500; ++i);
+        for (unsigned i = 0; i < 100; ++i);
+
+        WATCHPOINT(1);
+        for (unsigned i = 0; i < 100; ++i);
 #endif // TEST_WATCHPOINTS
 
 #ifdef TEST_BREAKPOINTS
