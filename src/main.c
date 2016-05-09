@@ -43,7 +43,7 @@ int main() {
 
 #ifdef TEST_BREAKPOINTS
         EXTERNAL_BREAKPOINT(0);
-        for (unsigned i = 0; i < 500; ++i);
+        for (unsigned i = 0; i < 1000; ++i);
 
         EXTERNAL_BREAKPOINT(1);
         for (unsigned i = 0; i < 500; ++i);
