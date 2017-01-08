@@ -1,8 +1,10 @@
 edb-rat: an app for testing EDB features
 ========================================
 
-This repository contains a "lab rat" test application on which we
-will demonstrate features of EDB. 
+This repository contains a "lab rat" test application on which we will
+demonstrate features of EDB. This repository also contains "links" in the form
+of git submodules to a frozen version of the EDB firmware and the EDB console
+repos.
 
 Below is a quick start tutorial for how to use EDB to debug an application.
 The application runs on a WISP5 energy-harvesting device.
@@ -22,26 +24,42 @@ framework. The `maker` repos is also included as a submodule in `ext/`.
 
 Build and flash EDB firmware:
 
-    cd ext/edb-firmware
+    cd ext/edb-server
     make bld/gcc/all
     make bld/gcc/prog
     cd ..
 
+The edb-rat application has a separate built configuration for testing each
+feature. To select the build variant, set ''one of the'' `TEST_*` variables to
+1 in `bld/Makefile`.
+
 Build and flash edb-rat app:
 
+    make bld/gcc/clean
     make bld/gcc/all
     make bld/gcc/prog
 
+NOTE: After changing the build configuration, make sure to clean.
+NOTE: After cleaning, it is sufficient to make the `bld/gcc/prog` target,
+since `bld/gcc/all` is a prerequisite.
+
 Connect the EDB to the WISP by connecting the two ends of the matching
 8+3-pin board-to-board headers. Then, separately, connect three additional
-wires: the Vcap line, RF RX line and RF TX line.
+wires: the Vcap line, RF RX line and RF TX line. On EDBv1.1 board, these
+connections go to the 5-pin header located near the programming header
+on the bottom side of the board. On EDBv1.0 board, these connections
+go to separate test points in the upper region on the board.
 
-Open the EDB console and attach to the debugger
+Open the EDB console and attach to the debugger, specifying the TTY
+device that shows up when you plug in the board (see tips below):
 
     cd ext/edb-console
     ./edb
-    > attach
+    > attach --device /dev/ttyUSB0
     >
+
+There should be no need to re-run the attach command as long as the console
+stays open, even if the EDB board is reset.
 
 ### Tips
 
@@ -64,7 +82,30 @@ Linux kernel shipps with the drivers, so no need to install anything. On OS X
 driver installation is likely necessary, as described in this [tutorial from
 SparkFun](https://learn.sparkfun.com/tutorials/how-to-install-ftdi-drivers/mac).
 
+## Board status
+
+The four LEDs on the top of the board indicate status as follows:
+
+    * ORANGE
+        - short single pulse: flashed on boot
+        - continuously on : in interactive debug mode
+    * GREEN (flashing): powered (from USB or FET), idle
+    * RED: error occured, error code encoded as frequency of flashing (see on scope)
+    * YELLOW: currently unused
+
 ## EDB commands
+
+A brief help for each console command can be obtained by running the command
+with `--help` argument.
+
+
+'''ATTENTION''': Disconnect WISP from the FET programmer when working with EDB,
+because the FET leaks power to the WISP, even when the FET is connected in the
+self-powered configuration. Also, when working with the RFID reader, keep it
+off while configuring things in the EDB console, and only turn it on once all
+is ready for the experiment. Otherwise, events will happen in the middle of
+you trying to set things up (e.g. enable watchpoints, etc.), which is very
+likely to confuse EDB.
 
 ### Sense and set energy level on the target device
 
@@ -117,56 +158,43 @@ fresh.
 
 #### Stream watchpoints
 
-The application code contains watchpoints at some locations of interest,
-inserted using the `WATCHPOINT()` macro (TODO: link into app code):
-
-   WATCHPOINT(1);
-   while (1) {
-     WATCHPOINT(2);
-     ...
-   }
+Build the app with `TEST_WATCHPOINTS = 1` and the rest set to 0.
 
 In the EDB console, enable the watchpoints and start monitoring for them using
 the `stream` command:
 
-    > attach
-    > watch 1 en vcap
-    > watch 2 en vcap
-    > stream - - watchpoints
-    adc_sampling_period_cycles= 3000
-    timestamp_sec,watchpoint_id,watchpoint_vcap
-    0.035750,1,2.3291
-    0.036672,2,2.2854
-    0.037608,2,2.2388
-    0.038543,2,2.2147
-    0.039479,2,2.2038
-    0.040414,2,2.1863
-    0.041350,2,2.1455
-    0.042286,2,2.1214
+    > watch --energy 0 E
+    > watch --energy 1 E
+    > stream watchpoints
+    adc_sampling_period_cycles=3000
+    host_timestamp_sec,timestamp_sec,watchpoint_id,watchpoint_vcap
+    13.678827,0.018393,0,2.3517
+    13.678827,0.018469,1,2.3466
+    13.678827,0.018546,1,2.3408
+    13.678827,0.018623,0,2.3451
+    13.678827,0.018699,1,2.3393
+    13.678827,0.018776,1,2.3313
+    13.678827,0.018853,0,2.3335
 
-The `watch` command supports an optional third argument `vcap`/`novcap` which
-controls whether a snapshot of capacitor voltage level is made (the third
-column in the above output).
+The `--energy` flag tells EDB to collect the energy level when watchpoint hits.
 
-#### Stream printf output
+#### Stream energy-interference-free printf output
+
+The energy-interference-free printf allows a target application to generate
+output while running on an intermittent power supply. The output can consume an
+arbitrary amount of energy -- EDB compensates.
+
+Build the app with `TEST_EIF_PRINTF = 1` and the rest set to 0.
 
 The application code contains printf or log statements with values
-of interest (TODO: link into app code):
+of interest:
 
-    while (1) {
-     x++;
-     PRINTF("x=%x\n", x);
-   }
+    EIF_PRINTF("EDB-RAT\r\n");
 
 In the EDB console, expect the stdout data using the `wait` command:
 
-    > attach
     > wait
-    x=1
-    x=2
-
-'''NOTE''': This has not been tested in a while, so due to bit-rot it may not
-work out-of-the-box.
+    20.119: EDB-RAT
 
 #### Stream RFID messages
 
@@ -193,26 +221,75 @@ they show up in the console.
 '''NOTE''': This has not been tested in a while, so due to bit-rot it may not
 work out-of-the-box.
 
+### Energy guards for energy-interference-free instrumentation
+
+An energy guard allows the target application to execute (instrumentation)
+code of an arbitrary energy cost, while running on an intermittent
+power supply. For example, a costly invariant check can be wrapped into
+an energy guard:
+
+    ENERGY_GUARD_BEGIN();
+    [ code ]
+    ENERGY_GUARD_END();
+
+While executing energy guarded code, EDB powers the target. At the end of the
+guard, EDB restores the energy level to its value before the energy guard,
+masking the effect of the guard on the stored energy level.
+
+Build the app with `TEST_ENERGY_GUARDS = 1` and the rest set to 0.
+
+The test code contains a watchpoint before and after the guard. If all is
+working, we should see no difference in the energy values at the watchpoints
+(except for some precision error), despite the lengthy code inside the guard.
+
+
+    > watch --energy 0 E
+    > watch --energy 1 E
+    > stream watchpoints
+    adc_sampling_period_cycles=3000
+    host_timestamp_sec,timestamp_sec,watchpoint_id,watchpoint_vcap
+    7.999799,0.016739,0,2.3663
+    7.999799,0.020505,1,2.3437
+    7.999799,0.020784,0,2.3422
+    7.999799,0.002843,1,2.3131
+
+### Keep-alive asserts
+
+'''TODO'''
+
 ### Interactive debugging
+
+#### Interrupt on next boot
+
+Build the app with `TEST_INTERRUPT = 1` and the rest set to 0.
 
 [Turn off the reader](#sllurp-toolbox-for-rfid-reader) (to make things
 simpler), then charge the WISP and interrupt the execution. The `int` command
-tells EDB to wait for WISP to boot up (by watching the regulated voltage,
-Vreg), and then to interrupt:
+tells EDB to wait for WISP to boot up, and then to interrupt:
 
-    > charge 2.4; int
-    Vcap = 2.4005
-    Vcap_saved = 2.2825
-    *>
+        > int
 
-The green LED on the EDB board should be on and the green LED on the side of
-the WISP without the MCU should also be on, indicating interactive debug mode.
-This is also indicated by the `*` in the EDB console prompt.
+Turn on the RFID reader. After serveral seconds, depending on the RF power,
+once the WISP boots, the console should drop into the interactive debug mode:
+
+        Vcap_saved = 2.3320
+        *> pc
+        0x000046ee
+        *> cont
+        Vcap_restored = 2.3284
+
+While in interactive debug mode, the console prompt should be marked with a
+`*`, like `*>`. Also, the orange LED on the EDB board should be on and the
+green LED on the side of the WISP without the MCU should also be on.
+
+#### Breakpoints
+
+Build the app with `TEST_BREAKPOINTS = 1` and the rest set to 0.
 
 The interactive debug mode can also be reached by hitting a breakpoint. In
 the application code, add
 
-    BREAKPOINT(1);
+    EXTERNAL_BREAKPOINT(1);
 
 Then, [turn on the power source](#sllurp-toolbox-for-rfid-reader), enable the
 breakpoint in the EDB console, and wait for it to be hit:
@@ -224,6 +301,11 @@ breakpoint in the EDB console, and wait for it to be hit:
 
 ''Sidenote'': The first argument to the `break` cmd 'e' stands for 'external',
 the type of breakpoint. TODO: elaborate.
+
+In interactive mode, we can get the current program counter address:
+
+    *> pc
+    0x00004766
 
 In interactive mode, any address (volatile memory, non-volatile memory,
 memory-mapped registers) can be read and written. Currently, EDB cannot resolve
@@ -246,7 +328,3 @@ To continue the execution (and have EDB automatically restore the energy level
 its value prior to interruption):
 
     *> cont
-
-### Intermittence-aware debugging primitives
-
-TODO: introduce _energy guards_ and _keep-alive asserts_.
