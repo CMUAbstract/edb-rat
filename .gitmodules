@@ -10,9 +10,6 @@
 [submodule "ext/maker"]
 	path = ext/maker
     url = https://github.com/CMUAbstract/maker
-[submodule "ext/edb-firmware"]
-	path = ext/edb-firmware
-    url = https://github.com/CMUAbstract/edb-firmware
 [submodule "ext/edb-console"]
 	path = ext/edb-console
     url = https://github.com/CMUAbstract/edb-console
@@ -28,3 +25,6 @@
 [submodule "ext/libmspprintf"]
 	path = ext/libmspprintf
 	url = /afs/ece.cmu.edu/project/abstract/repos/libmspprintf
+[submodule "ext/edb-server"]
+	path = ext/edb-server
+	url = /afs/ece.cmu.edu/project/abstract/repos/edb/edb-server
