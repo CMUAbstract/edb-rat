@@ -18,5 +18,11 @@ TEST_ENERGY_GUARDS = 0
 
 include ../Makefile.config
 
+export LIBEDB_BOARD_VERSION_MAJOR = 1
+export LIBEDB_BOARD_VERSION_MINOR = 1
+
+export LIBMSP_DCO_FREQ = 8000000
+
 CONFIG_EDB = 1
 include $(LIB_ROOT)/libedb/bld/Makefile.target
+include $(LIB_ROOT)/libmspbuiltins/bld/Makefile.target
