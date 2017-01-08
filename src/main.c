@@ -12,6 +12,10 @@
 #include <libedb/edb.h>
 #endif
 
+#ifdef TEST_EIF_PRINTF
+#include <libio/printf.h>
+#endif // TEST_EIF_PRINTF
+
 #include "pins.h"
 
 static void init_hw()
@@ -60,6 +64,12 @@ int main() {
 
         for (unsigned i = 0; i < 500; ++i);
 #endif // TEST_ENERGY_GUARDS
+
+#ifdef TEST_EIF_PRINTF
+        EIF_PRINTF("EDB-RAT\r\n");
+
+        for (unsigned i = 0; i < 500; ++i);
+#endif // TEST_EIF_PRINTF
 
     }
 
