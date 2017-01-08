@@ -30,7 +30,7 @@ Build and flash EDB firmware:
     cd ..
 
 The edb-rat application has a separate built configuration for testing each
-feature. To select the build variant, set ''one of the'' `TEST_*` variables to
+feature. To select the build variant, set *one of the* `TEST_*` variables to
 1 in `bld/Makefile`.
 
 Build and flash edb-rat app:
@@ -99,7 +99,7 @@ A brief help for each console command can be obtained by running the command
 with `--help` argument.
 
 
-'''ATTENTION''': Disconnect WISP from the FET programmer when working with EDB,
+***ATTENTION***: Disconnect WISP from the FET programmer when working with EDB,
 because the FET leaks power to the WISP, even when the FET is connected in the
 self-powered configuration. Also, when working with the RFID reader, keep it
 off while configuring things in the EDB console, and only turn it on once all
@@ -218,7 +218,7 @@ sure that communication is actually taking place.
 Events are buffered, so it make take quite a few minutes before
 they show up in the console.
 
-'''NOTE''': This has not been tested in a while, so due to bit-rot it may not
+***NOTE***: This has not been tested in a while, so due to bit-rot it may not
 work out-of-the-box.
 
 ### Energy guards for energy-interference-free instrumentation
@@ -255,7 +255,7 @@ working, we should see no difference in the energy values at the watchpoints
 
 ### Keep-alive asserts
 
-'''TODO'''
+***TODO***
 
 ### Interactive debugging
 
@@ -299,7 +299,7 @@ breakpoint in the EDB console, and wait for it to be hit:
     Interrupted: BREAKPOINT id: 1 Vcap_saved = 2.2336
     *>
 
-''Sidenote'': The first argument to the `break` cmd 'e' stands for 'external',
+*Sidenote*: The first argument to the `break` cmd 'e' stands for 'external',
 the type of breakpoint. TODO: elaborate.
 
 In interactive mode, we can get the current program counter address:
