@@ -16,3 +16,15 @@
 [submodule "ext/edb-console"]
 	path = ext/edb-console
     url = https://github.com/CMUAbstract/edb-console
+[submodule "ext/libmspbuiltins"]
+	path = ext/libmspbuiltins
+	url = git@github.com:CMUAbstract/libmspbuiltins
+[submodule "ext/libio"]
+	path = ext/libio
+	url = /afs/ece.cmu.edu/project/abstract/repos/libio
+[submodule "ext/libmspconsole"]
+	path = ext/libmspconsole
+	url = /afs/ece.cmu.edu/project/abstract/repos/libmspconsole
+[submodule "ext/libmspprintf"]
+	path = ext/libmspprintf
+	url = /afs/ece.cmu.edu/project/abstract/repos/libmspprintf
