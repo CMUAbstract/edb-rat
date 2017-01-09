@@ -255,7 +255,21 @@ working, we should see no difference in the energy values at the watchpoints
 
 ### Keep-alive asserts
 
-***TODO***
+With keep-alive asserts, an application can check invariants while running on
+an intermittent power supply. When an assert fails, EDB steps in, starts
+supplying power, and presents the user with an interactive debug prompt.
+
+Build the app with `TEST_ASSERT = 1` and the rest set to 0.
+
+    > wait
+
+Turn on the RF power source. Then, once the ASSERT is reached in code, the
+console should indicate which assert failed, and allow further inspection:
+
+    Interrupted: 'ASSERT' line: 57 Vcap_saved = 2.3517
+    *> pc
+    0x0000473c
+    *>
 
 ### Interactive debugging
 

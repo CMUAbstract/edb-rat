@@ -53,6 +53,10 @@ int main() {
         for (unsigned i = 0; i < 500; ++i);
 #endif // TEST_BREAKPOINTS
 
+#ifdef TEST_ASSERT
+        ASSERT(false);
+#endif // TEST_ASSERT
+
 #ifdef TEST_ENERGY_GUARDS
         WATCHPOINT(0);
 
