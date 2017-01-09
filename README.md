@@ -22,7 +22,10 @@ to fetch it along with the submodules.
 The app (and most of its dependencies) are built using the `maker` build
 framework. The `maker` repos is also included as a submodule in `ext/`.
 
-Build and flash EDB firmware:
+### Optional: build and flash EDB firmware
+
+If you have a board, chances are the firware has already been flashed onto it,
+but if needed you can always build and flash the firmware as follows:
 
     cd ext/edb-server
     make bld/gcc/all
@@ -33,7 +36,9 @@ The edb-rat application has a separate built configuration for testing each
 feature. To select the build variant, set *one of the* `TEST_*` variables to
 1 in `bld/Makefile`.
 
-Build and flash edb-rat app:
+### Build and flash edb-rat app
+
+To build and flash the edb-rat app onto the WISP, run:
 
     make bld/gcc/clean
     make bld/gcc/all
