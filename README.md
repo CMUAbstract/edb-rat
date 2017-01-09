@@ -86,12 +86,10 @@ SparkFun](https://learn.sparkfun.com/tutorials/how-to-install-ftdi-drivers/mac).
 
 The four LEDs on the top of the board indicate status as follows:
 
-    * ORANGE
-        - short single pulse: flashed on boot
-        - continuously on : in interactive debug mode
-    * GREEN (flashing): powered (from USB or FET), idle
+    * GREEN (flashing): device powered (from USB or FET) and idle
+    * YELLOW: flashes once when EDB boots
+    * ORANGE: on while in interactive debug mode
     * RED: error occured, error code encoded as frequency of flashing (see on scope)
-    * YELLOW: currently unused
 
 ## EDB commands
 
