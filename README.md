@@ -98,14 +98,17 @@ The four LEDs on the top of the board indicate status as follows:
 A brief help for each console command can be obtained by running the command
 with `--help` argument.
 
-
-***ATTENTION***: Disconnect WISP from the FET programmer when working with EDB,
+**ATTENTION**: Disconnect WISP from the FET programmer when working with EDB,
 because the FET leaks power to the WISP, even when the FET is connected in the
 self-powered configuration. Also, when working with the RFID reader, keep it
 off while configuring things in the EDB console, and only turn it on once all
 is ready for the experiment. Otherwise, events will happen in the middle of
 you trying to set things up (e.g. enable watchpoints, etc.), which is very
 likely to confuse EDB.
+
+**NOTE**: Before each of the different tests described below, do reset
+the EDB board using the on-board reset push-button. This is not always
+necessary, but eliminates potential problems.
 
 ### Sense and set energy level on the target device
 
