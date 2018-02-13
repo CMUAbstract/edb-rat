@@ -11,6 +11,7 @@ SRC_ROOT = ../../src
 
 #include $(LIB_ROOT)/libmspbuiltins/bld/Makefile.target
 
+# Enable only one at a time for a test case sanity
 TEST_INTERRUPT = 1
 TEST_WATCHPOINTS = 0
 TEST_BREAKPOINTS = 0
