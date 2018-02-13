@@ -7,6 +7,7 @@
 #include <libmsp/clock.h>
 #include <libmsp/watchdog.h>
 #include <libmsp/gpio.h>
+#include <libmsp/mem.h>
 
 #ifdef CONFIG_EDB
 #include <libedb/edb.h>
@@ -17,6 +18,8 @@
 #endif // TEST_EIF_PRINTF
 
 #include "pins.h"
+
+__nv unsigned nv_counter = 0x0;
 
 static void init_hw()
 {
@@ -47,10 +50,12 @@ int main() {
 
 #ifdef TEST_BREAKPOINTS
         EXTERNAL_BREAKPOINT(0);
-        for (unsigned i = 0; i < 1000; ++i);
+        for (unsigned i = 0; i < 1000; ++i)
+            nv_counter++;
 
         EXTERNAL_BREAKPOINT(1);
-        for (unsigned i = 0; i < 500; ++i);
+        for (unsigned i = 0; i < 500; ++i)
+            nv_counter--;
 #endif // TEST_BREAKPOINTS
 
 #ifdef TEST_ASSERT
